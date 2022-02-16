@@ -46,6 +46,35 @@ var app = new Vue({
 			}, (cookie) => {
 				alert(cookie.value);
 			});
+		},
+		newTab() {
+			chrome.tabs.create({
+				url: 'https://www.baidu.com'
+			}, () => {
+				
+			})
+		},
+		newAndDestoryTab() {
+			chrome.tabs.create({
+				url: 'https://www.baidu.com'
+			})
+			chrome.tabs.remove(3, () => {
+				
+			})
+		},
+		tabids() {
+			
+				// 获取所有的页签
+				chrome.tabs.getAllInWindow(null, function(tabs){
+					for (var i = 0; i < tabs.length; i++) {
+						// 在控制台打印出页签的tabid
+						console.log(tabs[i].id);
+						// 通过tabid向每一个页签发送消息
+						chrome.tabs.sendMessage(tabs[i].id, {type: 'xxx'});
+					}
+				});
+			
+
 		}
 	}
 })
